@@ -47,7 +47,19 @@ function encChar(c) {
 }
 
 function encrypt() {
-  pos1 = pos2 = pos3 = 0; // 初期位置AAA
+  pos1 = ALPHABET.indexOf(
+  document.getElementById("pos1").value.toUpperCase()
+);
+pos2 = ALPHABET.indexOf(
+  document.getElementById("pos2").value.toUpperCase()
+);
+pos3 = ALPHABET.indexOf(
+  document.getElementById("pos3").value.toUpperCase()
+);
+if (pos1 < 0) pos1 = 0;
+if (pos2 < 0) pos2 = 0;
+if (pos3 < 0) pos3 = 0;
+
   const input = document.getElementById("inputText").value.toUpperCase();
   let output = "";
 
