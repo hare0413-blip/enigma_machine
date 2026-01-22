@@ -2,32 +2,23 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Enigma Cipher</title>
+  <title>Enigma</title>
 </head>
 <body>
 
-<h1>Enigma 暗号変換</h1>
+<h1>Enigma</h1>
 
 <p>
-  初期位置：
-  <input id="pos1" value="A" size="1" maxlength="1">
-  <input id="pos2" value="A" size="1" maxlength="1">
-  <input id="pos3" value="A" size="1" maxlength="1">
+初期位置：
+<input id="pos1" value="A" size="1">
+<input id="pos2" value="A" size="1">
+<input id="pos3" value="A" size="1">
 </p>
 
-<input type="text" id="inputText" placeholder="HELLO">
+<input id="inputText" placeholder="HELLO">
 <button onclick="runEnigma()">変換</button>
 
 <p>結果：<span id="output"></span></p>
-
-<hr>
-
-<h2>逆変換（復号）</h2>
-
-<input type="text" id="decryptInput">
-<button onclick="decrypt()">逆変換</button>
-
-<p>復号結果：<span id="decryptOutput"></span></p>
 
 <script src="enigma.js"></script>
 </body>
