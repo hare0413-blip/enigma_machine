@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #0e0e0e;
+  color: #e6e2d3;
+  font-family: 'Special Elite', monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel {
+  background: #1b1b1b;
+  border: 2px solid #3a3a3a;
+  padding: 30px 40px;
+  width: 380px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 25px;
+  color: #aaa;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  color: #c9c3a5;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  background: #111;
+  border: 1px solid #444;
+  color: #e6e2d3;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #c9b458;
+}
+
+.rotors {
+  display: flex;
+  gap: 10px;
+}
+
+.rotors input {
+  width: 50px;
+  text-align: center;
+  font-size: 18px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  background: linear-gradient(#2c2c2c, #1a1a1a);
+  border: 1px solid #555;
+  color: #e6e2d3;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(#3a3a3a, #222);
+}
+
+.output {
+  min-height: 40px;
+  padding: 8px;
+  background: #0f0f0f;
+  border: 1px solid #444;
+  letter-spacing: 2px;
+  word-break: break-all;
+}
