@@ -5,30 +5,30 @@
   <title>Enigma Cipher</title>
 </head>
 <body>
-  <h1>Enigma 暗号変換</h1>
 
-  <input type="text" id="inputText" placeholder="HELLO">
-  <button onclick="encrypt()">変換</button>
+<h1>Enigma 暗号変換</h1>
 
 <p>
   初期位置：
-  <input type="text" id="pos1" value="A" size="1" maxlength="1">
-  <input type="text" id="pos2" value="A" size="1" maxlength="1">
-  <input type="text" id="pos3" value="A" size="1" maxlength="1">
+  <input id="pos1" value="A" size="1" maxlength="1">
+  <input id="pos2" value="A" size="1" maxlength="1">
+  <input id="pos3" value="A" size="1" maxlength="1">
 </p>
 
-  
-  <p>結果：<span id="output"></span></p>
+<input type="text" id="inputText" placeholder="HELLO">
+<button onclick="runEnigma()">変換</button>
 
-  <hr>
+<p>結果：<span id="output"></span></p>
+
+<hr>
 
 <h2>逆変換（復号）</h2>
 
-<input type="text" id="decryptInput" placeholder="暗号文">
+<input type="text" id="decryptInput">
 <button onclick="decrypt()">逆変換</button>
 
 <p>復号結果：<span id="decryptOutput"></span></p>
 
-  <script src="enigma.js"></script>
+<script src="enigma.js"></script>
 </body>
 </html>
