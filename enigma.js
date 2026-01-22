@@ -1,134 +1,68 @@
-// =======================
-// Enigma 簡易実装（完成版）
-// =======================
+console.log("enigma.js loaded");
 
 // アルファベット
-const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// ローター配線（I / II / III）
-const ROTOR_1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
-const ROTOR_2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
-const ROTOR_3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+// ローター
+const R1 = "EKMFLGDQVZNTOWYHXUSPAIBRCJ";
+const R2 = "AJDKSIRUXBLHWTMCQGZNPYFVOE";
+const R3 = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
+const REF = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
 
-// リフレクター（B）
-const REFLECTOR = "YRUHQSLDPXNGOKMIEBFZCWVJAT";
-
-// -----------------------
-// 逆配線生成
-// -----------------------
-function invertRotor(rotor) {
-  let inverse = Array(26);
+function inv(r) {
+  let x = Array(26);
   for (let i = 0; i < 26; i++) {
-    const letter = rotor[i];
-    inverse[ALPHABET.indexOf(letter)] = ALPHABET[i];
+    x[A.indexOf(r[i])] = A[i];
   }
-  return inverse.join("");
+  return x.join("");
 }
 
-const ROTOR_1_INV = invertRotor(ROTOR_1);
-const ROTOR_2_INV = invertRotor(ROTOR_2);
-const ROTOR_3_INV = invertRotor(ROTOR_3);
+const R1I = inv(R1);
+const R2I = inv(R2);
+const R3I = inv(R3);
 
-// -----------------------
-// ローター通過（順方向）
-// -----------------------
-function forward(letter, rotor, position) {
-  const index = ALPHABET.indexOf(letter);
-  const shifted = (index + position) % 26;
-  const wired = rotor[shifted];
-  const outIndex = (ALPHABET.indexOf(wired) - position + 26) % 26;
-  return ALPHABET[outIndex];
+function f(c, r, p) {
+  let i = (A.indexOf(c) + p) % 26;
+  let w = r[i];
+  return A[(A.indexOf(w) - p + 26) % 26];
 }
 
-// -----------------------
-// ローター通過（逆方向）
-// -----------------------
-function backward(letter, rotorInv, position) {
-  const index = ALPHABET.indexOf(letter);
-  const shifted = (index + position) % 26;
-  const wired = rotorInv[shifted];
-  const outIndex = (ALPHABET.indexOf(wired) - position + 26) % 26;
-  return ALPHABET[outIndex];
+function b(c, r, p) {
+  let i = (A.indexOf(c) + p) % 26;
+  let w = r[i];
+  return A[(A.indexOf(w) - p + 26) % 26];
 }
 
-// -----------------------
-// 1文字処理
-// -----------------------
-function processChar(letter, pos1, pos2, pos3) {
-  if (!ALPHABET.includes(letter)) return letter;
-
-  let c = forward(letter, ROTOR_1, pos1);
-  c = forward(c, ROTOR_2, pos2);
-  c = forward(c, ROTOR_3, pos3);
-
-  c = REFLECTOR[ALPHABET.indexOf(c)];
-
-  c = backward(c, ROTOR_3_INV, pos3);
-  c = backward(c, ROTOR_2_INV, pos2);
-  c = backward(c, ROTOR_1_INV, pos1);
-
+function encChar(c, p1, p2, p3) {
+  if (!A.includes(c)) return c;
+  c = f(c, R1, p1);
+  c = f(c, R2, p2);
+  c = f(c, R3, p3);
+  c = REF[A.indexOf(c)];
+  c = b(c, R3I, p3);
+  c = b(c, R2I, p2);
+  c = b(c, R1I, p1);
   return c;
 }
 
-// -----------------------
-// 全文処理（暗号化・復号 共通）
-// -----------------------
-function runEnigmaCore(text, start1, start2, start3) {
-  let result = "";
+function runEnigma() {
+  const text = document.getElementById("inputText").value.toUpperCase();
 
-  let pos1 = start1;
-  let pos2 = start2;
-  let pos3 = start3;
+  let p1 = A.indexOf(document.getElementById("pos1").value.toUpperCase());
+  let p2 = A.indexOf(document.getElementById("pos2").value.toUpperCase());
+  let p3 = A.indexOf(document.getElementById("pos3").value.toUpperCase());
 
-  for (let ch of text) {
-    const upper = ch.toUpperCase();
-    result += processChar(upper, pos1, pos2, pos3);
+  if (p1 < 0) p1 = 0;
+  if (p2 < 0) p2 = 0;
+  if (p3 < 0) p3 = 0;
 
-    // ローター回転
-    pos1 = (pos1 + 1) % 26;
-    if (pos1 === 0) {
-      pos2 = (pos2 + 1) % 26;
-      if (pos2 === 0) {
-        pos3 = (pos3 + 1) % 26;
-      }
-    }
+  let out = "";
+  for (let c of text) {
+    out += encChar(c, p1, p2, p3);
+    p1 = (p1 + 1) % 26;
+    if (p1 === 0) p2 = (p2 + 1) % 26;
+    if (p1 === 0 && p2 === 0) p3 = (p3 + 1) % 26;
   }
 
-  return result;
-}
-
-// -----------------------
-// 暗号化ボタン
-// -----------------------
-function runEnigma() {
-  const text = document.getElementById("inputText").value;
-
-  let pos1 = ALPHABET.indexOf(document.getElementById("pos1").value.toUpperCase());
-  let pos2 = ALPHABET.indexOf(document.getElementById("pos2").value.toUpperCase());
-  let pos3 = ALPHABET.indexOf(document.getElementById("pos3").value.toUpperCase());
-
-  if (pos1 < 0) pos1 = 0;
-  if (pos2 < 0) pos2 = 0;
-  if (pos3 < 0) pos3 = 0;
-
-  const output = runEnigmaCore(text, pos1, pos2, pos3);
-  document.getElementById("output").textContent = output;
-}
-
-// -----------------------
-// 復号ボタン（Enigmaは同一処理）
-// -----------------------
-function decrypt() {
-  const text = document.getElementById("decryptInput").value;
-
-  let pos1 = ALPHABET.indexOf(document.getElementById("pos1").value.toUpperCase());
-  let pos2 = ALPHABET.indexOf(document.getElementById("pos2").value.toUpperCase());
-  let pos3 = ALPHABET.indexOf(document.getElementById("pos3").value.toUpperCase());
-
-  if (pos1 < 0) pos1 = 0;
-  if (pos2 < 0) pos2 = 0;
-  if (pos3 < 0) pos3 = 0;
-
-  const output = runEnigmaCore(text, pos1, pos2, pos3);
-  document.getElementById("decryptOutput").textContent = output;
+  document.getElementById("output").textContent = out;
 }
