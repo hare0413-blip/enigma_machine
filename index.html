@@ -2,25 +2,36 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Enigma</title>
+  <title>Enigma Cipher</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="panel">
+    <h1>ENIGMA CIPHER</h1>
+    <p class="subtitle">— Wartime Encryption Simulator —</p>
 
-<h1>Enigma</h1>
+    <div class="section">
+      <label>PLAINTEXT</label>
+      <input type="text" id="inputText" placeholder="HELLO WORLD">
+    </div>
 
-<input id="inputText" placeholder="HELLO">
-<button onclick="runEnigma()">変換</button>
+    <div class="section">
+      <label>ROTOR POSITION</label>
+      <div class="rotors">
+        <input type="text" id="pos1" value="A" maxlength="1">
+        <input type="text" id="pos2" value="A" maxlength="1">
+        <input type="text" id="pos3" value="A" maxlength="1">
+      </div>
+    </div>
 
-<p>
-初期位置：
-<input id="pos1" value="A" size="1" maxlength="1">
-<input id="pos2" value="A" size="1" maxlength="1">
-<input id="pos3" value="A" size="1" maxlength="1">
-</p>
+    <button onclick="runEnigma()">ENCRYPT</button>
 
-<p>結果：<span id="output"></span></p>
+    <div class="section">
+      <label>CIPHERTEXT</label>
+      <div id="output" class="output"></div>
+    </div>
+  </div>
 
-
-<script src="enigma.js"></script>
+  <script src="enigma.js"></script>
 </body>
 </html>
