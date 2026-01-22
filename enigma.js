@@ -122,20 +122,37 @@ function runEnigma() {
 }
 
 function decrypt() {
-  // encrypt()と同じく初期位置を設定
-  pos1 = ALPHABET.indexOf(document.getElementById("pos1").value.toUpperCase());
-  pos2 = ALPHABET.indexOf(document.getElementById("pos2").value.toUpperCase());
-  pos3 = ALPHABET.indexOf(document.getElementById("pos3").value.toUpperCase());
+  let pos1 = ALPHABET.indexOf(
+    document.getElementById("pos1").value.toUpperCase()
+  );
+  let pos2 = ALPHABET.indexOf(
+    document.getElementById("pos2").value.toUpperCase()
+  );
+  let pos3 = ALPHABET.indexOf(
+    document.getElementById("pos3").value.toUpperCase()
+  );
 
   if (pos1 < 0) pos1 = 0;
   if (pos2 < 0) pos2 = 0;
   if (pos3 < 0) pos3 = 0;
 
-  const input = document.getElementById("decryptInput").value.toUpperCase();
+  const input = document
+    .getElementById("decryptInput")
+    .value.toUpperCase();
+
   let output = "";
 
   for (let c of input) {
-    output += encChar(c);
+    output += encryptChar(c, pos1, pos2, pos3);
+
+    // 暗号化と同じ回転ロジック
+    pos1 = (pos1 + 1) % 26;
+    if (pos1 === 0) {
+      pos2 = (pos2 + 1) % 26;
+      if (pos2 === 0) {
+        pos3 = (pos3 + 1) % 26;
+      }
+    }
   }
 
   document.getElementById("decryptOutput").textContent = output;
