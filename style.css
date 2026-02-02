@@ -1,7 +1,7 @@
 body {
   margin: 0;
   background: #0f1113;
-  color: #e0e0e0;
+  color: #00E5FF;
   font-family: "Courier New", monospace;
 }
 
@@ -42,7 +42,7 @@ input {
   width: 100%;
   padding: 8px;
   background: #0c0e10;
-  color: #e0e0e0;
+  color: #39FF14;
   border: 1px solid #555;
   font-family: inherit;
 }
@@ -61,7 +61,7 @@ button {
   width: 100%;
   padding: 10px;
   background: #2a2e33;
-  color: #e0e0e0;
+  color: #FFD700;
   border: 1px solid #777;
   cursor: pointer;
   letter-spacing: 1px;
